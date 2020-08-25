@@ -1,25 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 class Counter extends Component {
-  state = {
-    count: 0,
-    tags: []
-  };
-
-  render() { 
+  render() {
     return (
       <div>
-        { this.state.tags.length === 0 && <p> There are no tags </p> }
-        <ul> { this.state.tags.map(tag => <li key={tag}> {tag} </li>) } </ul>
+        <span className={this.getbadgeClasses()}>{this.formatCount()}</span>
+        <button
+          onClick={() => this.props.onIncrement(this.props.counter)}
+          className="btn btn-secondary btn-sm"
+        >
+          Increment
+        </button>
+        <button
+          className="btn btn-danger btn-sm"
+          onClick={() => this.props.onDelete(this.props.counter.id)}
+        >
+          Delete
+        </button>
       </div>
     );
   }
 
-  renderList() {
-    const { tags } = this.state
-    return tags.length === 0 ? <p> There are no tags </p> : <ul> { tags.map(tag => <li key={tag}> {tag} </li>) } </ul>
+  getbadgeClasses() {
+    let classes = "badge m-2 badge-";
+    return (classes += this.props.counter.value === 0 ? "warning" : "primary");
+  }
+
+  formatCount() {
+    const { value } = this.props.counter;
+    return value === 0 ? "Zero" : value;
   }
 }
 
 export default Counter;
-
